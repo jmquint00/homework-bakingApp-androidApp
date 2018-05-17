@@ -20,9 +20,33 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'com.android.support:appcompat-v7:27.1.1'
-    implementation 'com.android.support.constraint:constraint-layout:1.1.0'
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'com.android.support.test:runner:1.0.2'
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+    implementation deps.support.appCompat
+    implementation deps.support.constraintLayout
+    implementation deps.support.design
+    implementation deps.support.cardview
+    implementation deps.support.recyclerView
+
+    implementation deps.butterknife.core
+    annotationProcessor deps.butterknife.compiler
+
+    implementation deps.timber
+    implementation deps.gson
+    implementation deps.picasso
+    implementation deps.baseRecyclerViewAdapterHelper
+
+    implementation deps.retrofit.core
+    implementation deps.retrofit.gson
+    implementation deps.retrofit.adapterrRxjava2
+
+    implementation deps.okhttp.core
+    implementation deps.okhttp.logger
+
+    implementation deps.rx.core
+    implementation deps.rx.android
+
+    testImplementation deps.junit
+    androidTestImplementation deps.testRunner
+    androidTestImplementation(deps.espresso.core) {
+        exclude group: 'com.google.code.findbugs'
+    }
 }
