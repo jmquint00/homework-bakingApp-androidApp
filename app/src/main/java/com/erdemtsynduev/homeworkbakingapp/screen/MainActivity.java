@@ -1,7 +1,9 @@
-package com.erdemtsynduev.homeworkbakingapp;
+package com.erdemtsynduev.homeworkbakingapp.screen;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import com.erdemtsynduev.homeworkbakingapp.R;
 
 public class MainActivity extends AppCompatActivity {
 
