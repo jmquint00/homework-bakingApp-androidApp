@@ -1,6 +1,7 @@
 package com.erdemtsynduev.homeworkbakingapp.ldlingResource;
 
 import android.support.annotation.Nullable;
+import android.support.test.espresso.IdlingResource;
 
 import java.util.concurrent.atomic.AtomicBoolean;
 
