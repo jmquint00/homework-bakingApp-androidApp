@@ -29,6 +29,7 @@ dependencies {
     implementation deps.butterknife.core
     annotationProcessor deps.butterknife.compiler
 
+    implementation deps.exoplayer
     implementation deps.timber
     implementation deps.gson
     implementation deps.picasso
@@ -43,6 +44,8 @@ dependencies {
 
     implementation deps.rx.core
     implementation deps.rx.android
+
+    implementation deps.espresso.idling
 
     testImplementation deps.junit
     androidTestImplementation deps.testRunner
