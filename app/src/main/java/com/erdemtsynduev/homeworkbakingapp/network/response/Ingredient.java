@@ -1,4 +1,4 @@
-package com.erdemtsynduev.homeworkbakingapp.network.models;
+package com.erdemtsynduev.homeworkbakingapp.network.response;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

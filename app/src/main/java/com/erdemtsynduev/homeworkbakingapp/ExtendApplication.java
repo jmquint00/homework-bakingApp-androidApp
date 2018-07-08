@@ -7,6 +7,8 @@ import android.support.annotation.VisibleForTesting;
 
 import com.erdemtsynduev.homeworkbakingapp.ldlingResource.SimpleIdlingResource;
 
+import io.paperdb.Paper;
+
 public class ExtendApplication extends Application {
 
     // The Idling Resource which will be null in production.
@@ -26,6 +28,8 @@ public class ExtendApplication extends Application {
     }
 
     public ExtendApplication() {
+        // Init NoSQL DB
+        Paper.init(getApplicationContext());
 
         // The IdlingResource will be null in production.
         if (BuildConfig.DEBUG) {

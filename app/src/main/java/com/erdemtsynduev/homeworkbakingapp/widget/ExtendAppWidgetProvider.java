@@ -7,17 +7,18 @@ import android.content.Context;
 import android.content.Intent;
 import android.widget.RemoteViews;
 
-import com.erdemtsynduev.homeworkbakingapp.ApplicationPreferences;
 import com.erdemtsynduev.homeworkbakingapp.R;
-import com.erdemtsynduev.homeworkbakingapp.network.models.Recipe;
+import com.erdemtsynduev.homeworkbakingapp.network.response.Recipe;
 import com.erdemtsynduev.homeworkbakingapp.screen.main.MainActivity;
+
+import io.paperdb.Paper;
 
 public class ExtendAppWidgetProvider extends AppWidgetProvider {
 
     public static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
                                        int appWidgetId) {
 
-        Recipe recipe = ApplicationPreferences.loadRecipe(context);
+        Recipe recipe = Paper.book().read("recipe");
         if (recipe != null) {
             PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, new Intent(context, MainActivity.class), 0);
             // Construct the RemoteViews object
@@ -28,7 +29,7 @@ public class ExtendAppWidgetProvider extends AppWidgetProvider {
             views.setOnClickPendingIntent(R.id.recipe_widget_name_text, pendingIntent);
 
             // Initialize the list view
-            Intent intent = new Intent(context, ExtendRemoteViewsService.class);
+            Intent intent = new Intent(context, ExtendAppWidgetService.class);
             intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, appWidgetId);
             // Bind the remote adapter
             views.setRemoteAdapter(R.id.recipe_widget_listview, intent);

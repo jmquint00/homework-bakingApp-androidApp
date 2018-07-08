@@ -1,4 +1,4 @@
-package com.erdemtsynduev.homeworkbakingapp.network.models;
+package com.erdemtsynduev.homeworkbakingapp.network.response;
 
 import java.util.List;
 import com.google.gson.annotations.Expose;

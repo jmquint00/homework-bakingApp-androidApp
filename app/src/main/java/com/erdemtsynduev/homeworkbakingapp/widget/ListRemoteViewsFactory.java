@@ -4,9 +4,10 @@ import android.content.Context;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
-import com.erdemtsynduev.homeworkbakingapp.ApplicationPreferences;
 import com.erdemtsynduev.homeworkbakingapp.R;
-import com.erdemtsynduev.homeworkbakingapp.network.models.Recipe;
+import com.erdemtsynduev.homeworkbakingapp.network.response.Recipe;
+
+import io.paperdb.Paper;
 
 public class ListRemoteViewsFactory implements RemoteViewsService.RemoteViewsFactory {
 
@@ -24,7 +25,7 @@ public class ListRemoteViewsFactory implements RemoteViewsService.RemoteViewsFac
 
     @Override
     public void onDataSetChanged() {
-        recipe = ApplicationPreferences.loadRecipe(mContext);
+        recipe = Paper.book().read("recipe");
     }
 
     @Override

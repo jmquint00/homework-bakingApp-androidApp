@@ -6,13 +6,14 @@ import android.content.Context;
 import android.content.Intent;
 import android.widget.RemoteViewsService;
 
-import com.erdemtsynduev.homeworkbakingapp.ApplicationPreferences;
-import com.erdemtsynduev.homeworkbakingapp.network.models.Recipe;
+import com.erdemtsynduev.homeworkbakingapp.network.response.Recipe;
 
-public class ExtendRemoteViewsService extends RemoteViewsService {
+import io.paperdb.Paper;
+
+public class ExtendAppWidgetService extends RemoteViewsService {
 
     public static void updateWidget(Context context, Recipe recipe) {
-        ApplicationPreferences.saveRecipe(context, recipe);
+        Paper.book().write("recipe", recipe);
 
         AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
         int[] appWidgetIds = appWidgetManager.getAppWidgetIds(new ComponentName(context, ExtendAppWidgetProvider.class));
