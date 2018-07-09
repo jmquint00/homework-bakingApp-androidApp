@@ -30,7 +30,7 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/margin_medium"
         android:layout_marginStart="@dimen/margin_medium"
-        android:textAppearance="?attr/textAppearanceListItem"
+        android:textAppearance="?android:attr/textAppearanceListItem"
         android:textSize="@dimen/text_large"
         app:layout_constraintBottom_toBottomOf="@+id/step_order_text"
         app:layout_constraintEnd_toStartOf="@+id/imageView2"
