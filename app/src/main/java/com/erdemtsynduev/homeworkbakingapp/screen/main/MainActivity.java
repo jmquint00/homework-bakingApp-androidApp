@@ -22,5 +22,4 @@ public class MainActivity extends AppCompatActivity implements RecipesFragment.O
         intent.putExtra(RecipeInfoActivity.RECIPE_KEY, recipe);
         startActivity(intent);
     }
-
 }

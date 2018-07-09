@@ -11,11 +11,18 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 
+import com.erdemtsynduev.homeworkbakingapp.R;
 import com.erdemtsynduev.homeworkbakingapp.network.response.Recipe;
+import com.erdemtsynduev.homeworkbakingapp.screen.adapters.RecipeAdapter;
+import com.erdemtsynduev.homeworkbakingapp.screen.recipestepdetail.RecipeStepDetailActivity;
+import com.erdemtsynduev.homeworkbakingapp.screen.recipestepdetail.RecipeStepDetailFragment;
+import com.erdemtsynduev.homeworkbakingapp.utils.Misc;
+import com.erdemtsynduev.homeworkbakingapp.utils.SpacingItemDecoration;
 import com.erdemtsynduev.homeworkbakingapp.widget.ExtendAppWidgetService;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import timber.log.Timber;
 
 public class RecipeInfoActivity extends AppCompatActivity {
     public static final String RECIPE_KEY = "recipe_k";
@@ -80,17 +87,12 @@ public class RecipeInfoActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Logger.d("onDestroy");
+        Timber.d("onDestroy");
     }
 
     private void setupRecyclerView() {
         mRecyclerView.addItemDecoration(new SpacingItemDecoration((int) getResources().getDimension(R.dimen.margin_medium)));
-        mRecyclerView.setAdapter(new RecipeAdapter(mRecipe, new Listeners.OnItemClickListener() {
-            @Override
-            public void onItemClick(int position) {
-                showStep(position);
-            }
-        }));
+        mRecyclerView.setAdapter(new RecipeAdapter(mRecipe, position -> showStep(position)));
     }
 
     private void showStep(int position) {
@@ -122,7 +124,8 @@ public class RecipeInfoActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.action_add_to_widget) {
             ExtendAppWidgetService.updateWidget(this, mRecipe);
-            Misc.makeSnackBar(this, mParentLayout, String.format(getString(R.string.added_to_widget), mRecipe.getName()), false);
+            Misc.makeSnackBar(this, mParentLayout, String.format(getString(R.string.added_to_widget),
+                    mRecipe.getName()), false);
 
             return true;
         } else

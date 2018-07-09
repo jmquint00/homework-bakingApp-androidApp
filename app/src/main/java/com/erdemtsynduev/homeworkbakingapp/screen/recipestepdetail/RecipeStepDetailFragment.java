@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.erdemtsynduev.homeworkbakingapp.R;
 import com.erdemtsynduev.homeworkbakingapp.network.response.Step;
 import com.google.android.exoplayer2.ExoPlayerFactory;
 import com.google.android.exoplayer2.SimpleExoPlayer;
@@ -25,10 +26,12 @@ import com.google.android.exoplayer2.upstream.DataSource;
 import com.google.android.exoplayer2.upstream.DefaultBandwidthMeter;
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.util.Util;
+import com.squareup.picasso.Picasso;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import timber.log.Timber;
 
 public class RecipeStepDetailFragment extends Fragment {
 
@@ -82,9 +85,7 @@ public class RecipeStepDetailFragment extends Fragment {
 
         // Show thumbnail if url exists
         if (!mStep.getThumbnailURL().isEmpty()) {
-            GlideApp.with(this)
-                    .load(mStep.getThumbnailURL())
-                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+            Picasso.get().load(mStep.getThumbnailURL())
                     .placeholder(R.drawable.ic_dinner)
                     .into(mIvThumbnail);
             mIvThumbnail.setVisibility(View.VISIBLE);
@@ -115,7 +116,7 @@ public class RecipeStepDetailFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
-        Logger.d("onDestroyView");
+        Timber.d("onDestroyView");
     }
 
 

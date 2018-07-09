@@ -8,10 +8,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 
+import com.erdemtsynduev.homeworkbakingapp.R;
 import com.erdemtsynduev.homeworkbakingapp.network.response.Recipe;
+import com.erdemtsynduev.homeworkbakingapp.screen.adapters.StepsFragmentPagerAdapter;
+import com.erdemtsynduev.homeworkbakingapp.utils.Misc;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import timber.log.Timber;
 
 public class RecipeStepDetailActivity extends AppCompatActivity {
 
@@ -88,7 +92,7 @@ public class RecipeStepDetailActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        Logger.d("onDestroy");
+        Timber.d("onDestroy");
     }
 
 }

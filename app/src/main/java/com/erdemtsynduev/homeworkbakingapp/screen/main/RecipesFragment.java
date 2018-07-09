@@ -19,7 +19,15 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.erdemtsynduev.homeworkbakingapp.ExtendApplication;
+import com.erdemtsynduev.homeworkbakingapp.R;
+import com.erdemtsynduev.homeworkbakingapp.network.RestClient;
+import com.erdemtsynduev.homeworkbakingapp.network.api.Api;
 import com.erdemtsynduev.homeworkbakingapp.network.response.Recipe;
+import com.erdemtsynduev.homeworkbakingapp.screen.Listeners;
+import com.erdemtsynduev.homeworkbakingapp.screen.adapters.RecipesAdapter;
+import com.erdemtsynduev.homeworkbakingapp.utils.Misc;
+import com.erdemtsynduev.homeworkbakingapp.utils.SpacingItemDecoration;
+import com.erdemtsynduev.homeworkbakingapp.widget.ExtendAppWidgetService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,13 +35,19 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
+import io.paperdb.Paper;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
+import timber.log.Timber;
 
 public class RecipesFragment extends Fragment {
 
     @BindView(R.id.recipes_recycler_view)
     RecyclerView mRecipesRecyclerView;
+
     @BindView(R.id.pull_to_refresh)
     SwipeRefreshLayout mPullToRefresh;
+
     @BindView(R.id.noDataContainer)
     ConstraintLayout mNoDataContainer;
 
@@ -43,6 +57,8 @@ public class RecipesFragment extends Fragment {
     private Unbinder unbinder;
     private List<Recipe> mRecipes;
     private ExtendApplication globalApplication;
+    private CompositeDisposable mCompositeDisposable;
+    private Api api = RestClient.getInstance().getApi();
 
     /**
      * Will load the movies when the app launch, or if the app will launch without an internet connection
@@ -65,6 +81,8 @@ public class RecipesFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        mCompositeDisposable = new CompositeDisposable();
     }
 
     @Override
@@ -88,12 +106,8 @@ public class RecipesFragment extends Fragment {
         if (savedInstanceState != null && savedInstanceState.containsKey(RECIPES_KEY)) {
             mRecipes = savedInstanceState.getParcelableArrayList(RECIPES_KEY);
 
-            mRecipesRecyclerView.setAdapter(new RecipesAdapter(getActivity().getApplicationContext(), mRecipes, new Listeners.OnItemClickListener() {
-                @Override
-                public void onItemClick(int position) {
-                    mListener.onRecipeSelected(mRecipes.get(position));
-                }
-            }));
+            mRecipesRecyclerView.setAdapter(new RecipesAdapter(getActivity().getApplicationContext(),
+                    mRecipes, position -> mListener.onRecipeSelected(mRecipes.get(position))));
             dataLoadedTakeCareLayout();
         }
         return viewRoot;
@@ -120,7 +134,7 @@ public class RecipesFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
-        Logger.d("onDestroyView");
+        Timber.d("onDestroyView");
     }
 
     @Override
@@ -165,35 +179,29 @@ public class RecipesFragment extends Fragment {
         if (Misc.isNetworkAvailable(getActivity().getApplicationContext())) {
             mPullToRefresh.setRefreshing(true);
 
-            RecipesApiManager.getInstance().getRecipes(new RecipesApiCallback<List<Recipe>>() {
-                @Override
-                public void onResponse(final List<Recipe> result) {
-                    if (result != null) {
-                        mRecipes = result;
-                        mRecipesRecyclerView.setAdapter(new RecipesAdapter(getActivity().getApplicationContext(), mRecipes, new Listeners.OnItemClickListener() {
-                            @Override
-                            public void onItemClick(int position) {
-                                mListener.onRecipeSelected(mRecipes.get(position));
+            mCompositeDisposable.add(api.getRecipes()
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(result -> {
+                        if (result != null) {
+                            mRecipes = result;
+                            mRecipesRecyclerView.setAdapter(new RecipesAdapter(getActivity().getApplicationContext(), mRecipes, new Listeners.OnItemClickListener() {
+                                @Override
+                                public void onItemClick(int position) {
+                                    mListener.onRecipeSelected(mRecipes.get(position));
+                                }
+                            }));
+                            // Set the default recipe for the widget
+                            if (Paper.book().read("recipe") == null) {
+                                ExtendAppWidgetService.updateWidget(getActivity(), mRecipes.get(0));
                             }
-                        }));
-                        // Set the default recipe for the widget
-                        if (Prefs.loadRecipe(getActivity().getApplicationContext()) == null) {
-                            AppWidgetService.updateWidget(getActivity(), mRecipes.get(0));
+                        } else {
+                            Misc.makeSnackBar(getActivity(), getView(), getString(R.string.failed_to_load_data), true);
                         }
-
-                    } else {
-                        Misc.makeSnackBar(getActivity(), getView(), getString(R.string.failed_to_load_data), true);
-                    }
-
-                    dataLoadedTakeCareLayout();
-                }
-
-                @Override
-                public void onCancel() {
-                    dataLoadedTakeCareLayout();
-                }
-
-            });
+                        dataLoadedTakeCareLayout();
+                    }, throwable -> {
+                        dataLoadedTakeCareLayout();
+                        throwable.printStackTrace();
+                    }));
         } else {
             Misc.makeSnackBar(getActivity(), getView(), getString(R.string.no_internet), true);
         }

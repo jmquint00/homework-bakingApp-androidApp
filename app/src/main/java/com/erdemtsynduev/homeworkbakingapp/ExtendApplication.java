@@ -28,13 +28,18 @@ public class ExtendApplication extends Application {
     }
 
     public ExtendApplication() {
-        // Init NoSQL DB
-        Paper.init(getApplicationContext());
-
         // The IdlingResource will be null in production.
         if (BuildConfig.DEBUG) {
             initializeIdlingResource();
         }
+    }
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+
+        // Init NoSQL DB
+        Paper.init(getApplicationContext());
     }
 
     public void setIdleState(boolean state) {
