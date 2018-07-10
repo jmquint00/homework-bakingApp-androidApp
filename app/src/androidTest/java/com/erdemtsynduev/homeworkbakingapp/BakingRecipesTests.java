@@ -4,7 +4,9 @@ import android.content.Context;
 import android.support.test.espresso.intent.Intents;
 import android.support.test.runner.AndroidJUnit4;
 
+import com.erdemtsynduev.homeworkbakingapp.network.response.Recipe;
 import com.erdemtsynduev.homeworkbakingapp.screen.recipeinfo.RecipeInfoActivity;
+import com.erdemtsynduev.homeworkbakingapp.screen.recipestepdetail.RecipeStepDetailActivity;
 
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.action.ViewActions.click;
@@ -33,7 +35,6 @@ public class BakingRecipesTests extends BaseTest {
         intended(hasExtraWithKey(RecipeInfoActivity.RECIPE_KEY));
 
         Intents.release();
-
     }
 
     @Test

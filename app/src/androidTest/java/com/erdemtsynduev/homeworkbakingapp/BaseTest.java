@@ -2,6 +2,7 @@ package com.erdemtsynduev.homeworkbakingapp;
 
 import android.support.test.espresso.IdlingRegistry;
 import android.support.test.espresso.IdlingResource;
+import android.support.test.rule.ActivityTestRule;
 
 import com.erdemtsynduev.homeworkbakingapp.screen.main.MainActivity;
 
@@ -31,5 +32,4 @@ public class BaseTest {
             IdlingRegistry.getInstance().unregister(mIdlingResource);
         }
     }
-}
 }
