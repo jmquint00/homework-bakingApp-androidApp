@@ -51,7 +51,6 @@ dependencies {
     implementation deps.gson
     implementation deps.picasso
     implementation deps.paperdb
-    implementation deps.baseRecyclerViewAdapterHelper
 
     implementation deps.retrofit.core
     implementation deps.retrofit.gson

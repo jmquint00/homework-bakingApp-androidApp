@@ -41,8 +41,6 @@ public class RecipeStepDetailFragment extends Fragment {
 
     @BindView(R.id.instructions_container)
     NestedScrollView mInstructionsContainer;
-
-
     @BindView(R.id.exo_player_view)
     SimpleExoPlayerView mExoPlayerView;
     @BindView(R.id.step_thumbnail_image)
@@ -83,7 +81,6 @@ public class RecipeStepDetailFragment extends Fragment {
 
         mTvInstructions.setText(mStep.getDescription());
 
-        // Show thumbnail if url exists
         if (!mStep.getThumbnailURL().isEmpty()) {
             Picasso.get().load(mStep.getThumbnailURL())
                     .placeholder(R.drawable.ic_dinner)
@@ -100,7 +97,6 @@ public class RecipeStepDetailFragment extends Fragment {
         if (!TextUtils.isEmpty(mStep.getVideoURL()))
             initializePlayer(Uri.parse(mStep.getVideoURL()));
         else {
-            // Un- hide InstructionsContainer because in case of phone landscape is hidden
             mInstructionsContainer.setVisibility(View.VISIBLE);
         }
     }
@@ -130,22 +126,16 @@ public class RecipeStepDetailFragment extends Fragment {
 
     private void initializePlayer(Uri mediaUri) {
         if (mExoPlayer == null) {
-            // Create a default TrackSelector
             DefaultBandwidthMeter bandwidthMeter = new DefaultBandwidthMeter();
             TrackSelection.Factory videoTrackSelectionFactory = new AdaptiveTrackSelection.Factory(bandwidthMeter);
             TrackSelector trackSelector = new DefaultTrackSelector(videoTrackSelectionFactory);
 
-            // Create the player
             mExoPlayer = ExoPlayerFactory.newSimpleInstance(getContext(), trackSelector);
 
-            // Bind the player to the view.
             mExoPlayerView.setPlayer(mExoPlayer);
-            // Measures bandwidth during playback. Can be null if not required.
-            // Produces DataSource instances through which media data is loaded.
-            DataSource.Factory dataSourceFactory = new DefaultDataSourceFactory(getContext(), Util.getUserAgent(getContext(), getString(R.string.app_name)), bandwidthMeter);
-            // This is the MediaSource representing the media to be played.
+            DataSource.Factory dataSourceFactory = new DefaultDataSourceFactory(getContext(),
+                    Util.getUserAgent(getContext(), getString(R.string.app_name)), bandwidthMeter);
             MediaSource videoSource = new ExtractorMediaSource.Factory(dataSourceFactory).createMediaSource(mediaUri);
-            // Prepare the player with the source.
             mExoPlayer.prepare(videoSource);
 
             // onRestore

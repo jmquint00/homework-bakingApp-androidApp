@@ -41,7 +41,6 @@ buildscript {
             'timber'                       : 'com.jakewharton.timber:timber:4.7.1',
             'gson'                         : 'com.google.code.gson:gson:2.8.5',
             'picasso'                      : 'com.squareup.picasso:picasso:2.71828',
-            'baseRecyclerViewAdapterHelper': 'com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.40',
             'exoplayer'                    : 'com.google.android.exoplayer:exoplayer:2.6.1',
             'paperdb'                      : 'io.paperdb:paperdb:2.6',
             'junit'                        : 'junit:junit:4.12',

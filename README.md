@@ -1,16 +1,26 @@
+![screen](../master/art/promo_logo.png)
+
 Homework - "Baking App"
 =========================
 
+Android Baking App that will allow Udacity’s [Android Developer Nanodegree Program](https://www.udacity.com/course/android-developer-nanodegree-by-google--nd801) resident baker-in-chief, 
+Miriam, to share her recipes with the world. An application that will 
+allow the user to select a recipe and watch 
+the steps with video control, how to complete it.
+
 Samples demonstrating how to use:
-1. How to Get Queries with Retrofit
-2. Retrofit
-3. RecyclerView
-4. Retrieving data from api
+1. Use MediaPlayer/Exoplayer to display videos.
+2. Handle error cases in Android.
+3. Add a widget to your app experience.
+4. Leverage a third-party library in your app.
+5. Use Fragments to create a responsive design that works on phones and tablets.
 
 Pre-requisites
 --------------
 Android SDK 27
+
 Android Build Tools v27.1.1
+
 Android Support Repository
 
 Getting Started
@@ -30,27 +40,21 @@ Alternatively use the "gradlew build" command to build the project directly.
 
 Support
 -------
-Patches are encouraged, and may be submitted by forking this project and submitting a pull request through GitHub. 
+Patches are encouraged, and may be submitted by forking this project 
+and submitting a pull request through GitHub. 
 
 License
 -------
-(See each sample directory for details.)
+Copyright 2018 Erdem Tsynduev
 
-Copyright 2015 The Android Open Source Project
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
 
-Copyright 2015 Google, Inc.
-
-Licensed to the Apache Software Foundation (ASF) under one or more contributor
-license agreements.  See the NOTICE file distributed with this work for
-additional information regarding copyright ownership.  The ASF licenses this
-file to you under the Apache License, Version 2.0 (the "License"); you may not
-use this file except in compliance with the License.  You may obtain a copy of
-the License at
-
-  http://www.apache.org/licenses/LICENSE-2.0
+    http://www.apache.org/licenses/LICENSE-2.0
 
 Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
-WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.  See the
-License for the specific language governing permissions and limitations under
-the License.
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.

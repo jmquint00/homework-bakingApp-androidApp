@@ -52,14 +52,14 @@ public class RecipeStepDetailActivity extends AppCompatActivity {
             finish();
         }
 
-        // Show the Up button in the action bar.
         final ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setTitle(mRecipe.getName());
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
-        StepsFragmentPagerAdapter adapter = new StepsFragmentPagerAdapter(getApplicationContext(), mRecipe.getSteps(), getSupportFragmentManager());
+        StepsFragmentPagerAdapter adapter = new StepsFragmentPagerAdapter(getApplicationContext(),
+                mRecipe.getSteps(), getSupportFragmentManager());
         mVpRecipeStep.setAdapter(adapter);
         mTlRecipeStep.setupWithViewPager(mVpRecipeStep);
         mVpRecipeStep.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -94,5 +94,4 @@ public class RecipeStepDetailActivity extends AppCompatActivity {
         super.onDestroy();
         Timber.d("onDestroy");
     }
-
 }

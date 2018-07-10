@@ -29,7 +29,6 @@ public class RecipeInfoActivity extends AppCompatActivity {
 
     @BindView(R.id.recipe_step_list)
     RecyclerView mRecyclerView;
-
     @BindView(android.R.id.content)
     View mParentLayout;
 
@@ -55,7 +54,6 @@ public class RecipeInfoActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        // Show the Up button in the action bar and set recipes name as title.
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setTitle(mRecipe.getName());

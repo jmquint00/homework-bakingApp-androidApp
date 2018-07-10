@@ -28,10 +28,10 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        if (viewType == 0) { // Ingredients
+        if (viewType == 0) {
             return new IngredientsViewHolder(LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.recipe_ingredient_list_item, parent, false));
-        } else { // Steps
+        } else {
             return new StepViewHolder(LayoutInflater.from(parent.getContext())
                     .inflate(R.layout.recipe_step_list_item, parent, false));
         }
@@ -47,7 +47,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder>
             StringBuilder ingValue = new StringBuilder();
             for (int i = 0; i < mRecipe.getIngredients().size(); i++) {
                 Ingredient ingredient = mRecipe.getIngredients().get(i);
-                ingValue.append(String.format(Locale.getDefault(), "• %s (%d %s)", ingredient.getIngredient(), ingredient.getQuantity(), ingredient.getMeasure()));
+                ingValue.append(String.format(Locale.getDefault(), "• %s (%s %s)", ingredient.getIngredient(), ingredient.getQuantity(), ingredient.getMeasure()));
                 if (i != mRecipe.getIngredients().size() - 1)
                     ingValue.append("\n");
             }

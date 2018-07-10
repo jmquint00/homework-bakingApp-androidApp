@@ -44,10 +44,8 @@ public class RecipesFragment extends Fragment {
 
     @BindView(R.id.recipes_recycler_view)
     RecyclerView mRecipesRecyclerView;
-
     @BindView(R.id.pull_to_refresh)
     SwipeRefreshLayout mPullToRefresh;
-
     @BindView(R.id.noDataContainer)
     ConstraintLayout mNoDataContainer;
 

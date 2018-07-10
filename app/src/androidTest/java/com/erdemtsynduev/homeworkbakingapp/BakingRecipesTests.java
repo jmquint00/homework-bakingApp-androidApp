@@ -1,15 +1,12 @@
 package com.erdemtsynduev.homeworkbakingapp;
 
-import android.content.Context;
 import android.support.test.espresso.intent.Intents;
 import android.support.test.runner.AndroidJUnit4;
 
-import com.erdemtsynduev.homeworkbakingapp.network.response.Recipe;
 import com.erdemtsynduev.homeworkbakingapp.screen.recipeinfo.RecipeInfoActivity;
 import com.erdemtsynduev.homeworkbakingapp.screen.recipestepdetail.RecipeStepDetailActivity;
 
 import static android.support.test.espresso.Espresso.onView;
-import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.intent.Intents.intended;
 import static android.support.test.espresso.intent.matcher.IntentMatchers.hasComponent;
@@ -17,8 +14,6 @@ import static android.support.test.espresso.intent.matcher.IntentMatchers.hasExt
 import static android.support.test.espresso.matcher.ViewMatchers.isCompletelyDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
-import static junit.framework.Assert.assertNotNull;
-
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -72,25 +67,5 @@ public class BakingRecipesTests extends BaseTest {
             onView(withId(R.id.exo_player_view))
                     .check(matches(isDisplayed()));
         }
-    }
-
-    @Test
-    public void checkAddWidgetButtonFunctionality() {
-        // Clear the preferences values
-        globalApplication.getSharedPreferences(Prefs.PREFS_NAME, Context.MODE_PRIVATE).edit()
-                .clear()
-                .commit();
-
-        Navigation.getMeToRecipeInfo(0);
-
-        onView(withId(R.id.action_add_to_widget))
-                .check(matches(isDisplayed()))
-                .perform(click());
-
-        // Get the recipe base64 string from the sharedPrefs
-        Recipe recipe = Prefs.loadRecipe(globalApplication);
-
-        // Assert recipe is not null
-        assertNotNull(recipe);
     }
 }

@@ -50,9 +50,12 @@ public class RecipesAdapter extends RecyclerView.Adapter<RecipeViewHolder> {
                     .into(holder.mIvRecipe);
         }
 
-        holder.itemView.setOnClickListener(v -> {
-            if (mOnItemClickListener != null)
-                mOnItemClickListener.onItemClick(position);
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mOnItemClickListener != null)
+                    mOnItemClickListener.onItemClick(position);
+            }
         });
     }
 
