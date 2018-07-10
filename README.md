@@ -38,6 +38,10 @@ If prompted for a gradle configuration accept the default settings.
 
 Alternatively use the "gradlew build" command to build the project directly.
 
+Download App
+---------------
+You can download an APK build [on releases page](https://github.com/Erdemtsynduev/homework-bakingApp-androidApp/releases).
+
 Support
 -------
 Patches are encouraged, and may be submitted by forking this project 
