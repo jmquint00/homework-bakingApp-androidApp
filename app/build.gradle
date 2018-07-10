@@ -70,4 +70,11 @@ dependencies {
     androidTestImplementation(deps.espresso.core) {
         exclude group: 'com.google.code.findbugs'
     }
+    androidTestImplementation deps.espresso.intents
+    androidTestImplementation(deps.espresso.contrib) {
+        exclude group: 'com.android.support', module: 'appcompat'
+        exclude group: 'com.android.support', module: 'support-v4'
+        exclude group: 'com.android.support', module: 'support-annotations'
+        exclude module: 'recyclerview-v7'
+    }
 }
