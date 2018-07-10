@@ -43,12 +43,6 @@ public class Ingredient implements Parcelable {
     }
 
 
-    protected Ingredient(Parcel in) {
-        quantity = in.readByte() == 0x00 ? null : in.readInt();
-        measure = in.readString();
-        ingredient = in.readString();
-    }
-
     @Override
     public int describeContents() {
         return 0;
@@ -56,21 +50,24 @@ public class Ingredient implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        if (quantity == null) {
-            dest.writeByte((byte) (0x00));
-        } else {
-            dest.writeByte((byte) (0x01));
-            dest.writeInt(quantity);
-        }
-        dest.writeString(measure);
-        dest.writeString(ingredient);
+        dest.writeValue(this.quantity);
+        dest.writeString(this.measure);
+        dest.writeString(this.ingredient);
     }
 
-    @SuppressWarnings("unused")
-    public static final Parcelable.Creator<Ingredient> CREATOR = new Parcelable.Creator<Ingredient>() {
+    public Ingredient() {
+    }
+
+    protected Ingredient(Parcel in) {
+        this.quantity = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.measure = in.readString();
+        this.ingredient = in.readString();
+    }
+
+    public static final Creator<Ingredient> CREATOR = new Creator<Ingredient>() {
         @Override
-        public Ingredient createFromParcel(Parcel in) {
-            return new Ingredient(in);
+        public Ingredient createFromParcel(Parcel source) {
+            return new Ingredient(source);
         }
 
         @Override

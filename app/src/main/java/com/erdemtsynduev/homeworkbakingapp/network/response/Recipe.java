@@ -79,25 +79,6 @@ public class Recipe implements Parcelable {
     }
 
 
-    protected Recipe(Parcel in) {
-        id = in.readByte() == 0x00 ? null : in.readInt();
-        name = in.readString();
-        if (in.readByte() == 0x01) {
-            ingredients = new ArrayList<Ingredient>();
-            in.readList(ingredients, Ingredient.class.getClassLoader());
-        } else {
-            ingredients = null;
-        }
-        if (in.readByte() == 0x01) {
-            steps = new ArrayList<Step>();
-            in.readList(steps, Step.class.getClassLoader());
-        } else {
-            steps = null;
-        }
-        servings = in.readByte() == 0x00 ? null : in.readInt();
-        image = in.readString();
-    }
-
     @Override
     public int describeContents() {
         return 0;
@@ -105,39 +86,30 @@ public class Recipe implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        if (id == null) {
-            dest.writeByte((byte) (0x00));
-        } else {
-            dest.writeByte((byte) (0x01));
-            dest.writeInt(id);
-        }
-        dest.writeString(name);
-        if (ingredients == null) {
-            dest.writeByte((byte) (0x00));
-        } else {
-            dest.writeByte((byte) (0x01));
-            dest.writeList(ingredients);
-        }
-        if (steps == null) {
-            dest.writeByte((byte) (0x00));
-        } else {
-            dest.writeByte((byte) (0x01));
-            dest.writeList(steps);
-        }
-        if (servings == null) {
-            dest.writeByte((byte) (0x00));
-        } else {
-            dest.writeByte((byte) (0x01));
-            dest.writeInt(servings);
-        }
-        dest.writeString(image);
+        dest.writeValue(this.id);
+        dest.writeString(this.name);
+        dest.writeTypedList(this.ingredients);
+        dest.writeTypedList(this.steps);
+        dest.writeValue(this.servings);
+        dest.writeString(this.image);
     }
 
-    @SuppressWarnings("unused")
-    public static final Parcelable.Creator<Recipe> CREATOR = new Parcelable.Creator<Recipe>() {
+    public Recipe() {
+    }
+
+    protected Recipe(Parcel in) {
+        this.id = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.name = in.readString();
+        this.ingredients = in.createTypedArrayList(Ingredient.CREATOR);
+        this.steps = in.createTypedArrayList(Step.CREATOR);
+        this.servings = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.image = in.readString();
+    }
+
+    public static final Creator<Recipe> CREATOR = new Creator<Recipe>() {
         @Override
-        public Recipe createFromParcel(Parcel in) {
-            return new Recipe(in);
+        public Recipe createFromParcel(Parcel source) {
+            return new Recipe(source);
         }
 
         @Override

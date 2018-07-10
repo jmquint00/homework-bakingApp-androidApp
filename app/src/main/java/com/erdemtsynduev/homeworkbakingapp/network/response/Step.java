@@ -65,14 +65,6 @@ public class Step implements Parcelable {
     }
 
 
-    protected Step(Parcel in) {
-        id = in.readByte() == 0x00 ? null : in.readInt();
-        shortDescription = in.readString();
-        description = in.readString();
-        videoURL = in.readString();
-        thumbnailURL = in.readString();
-    }
-
     @Override
     public int describeContents() {
         return 0;
@@ -80,23 +72,28 @@ public class Step implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        if (id == null) {
-            dest.writeByte((byte) (0x00));
-        } else {
-            dest.writeByte((byte) (0x01));
-            dest.writeInt(id);
-        }
-        dest.writeString(shortDescription);
-        dest.writeString(description);
-        dest.writeString(videoURL);
-        dest.writeString(thumbnailURL);
+        dest.writeValue(this.id);
+        dest.writeString(this.shortDescription);
+        dest.writeString(this.description);
+        dest.writeString(this.videoURL);
+        dest.writeString(this.thumbnailURL);
     }
 
-    @SuppressWarnings("unused")
-    public static final Parcelable.Creator<Step> CREATOR = new Parcelable.Creator<Step>() {
+    public Step() {
+    }
+
+    protected Step(Parcel in) {
+        this.id = (Integer) in.readValue(Integer.class.getClassLoader());
+        this.shortDescription = in.readString();
+        this.description = in.readString();
+        this.videoURL = in.readString();
+        this.thumbnailURL = in.readString();
+    }
+
+    public static final Creator<Step> CREATOR = new Creator<Step>() {
         @Override
-        public Step createFromParcel(Parcel in) {
-            return new Step(in);
+        public Step createFromParcel(Parcel source) {
+            return new Step(source);
         }
 
         @Override
